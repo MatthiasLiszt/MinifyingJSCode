@@ -3,11 +3,12 @@ samples on how to minify js code by simple compression and adopted lempel-ziv-me
 
 [runnable demo of the minified half pong game](https://codepen.io/mahagugu/pen/YzpRNWL)
 
-## description of fileslie
-__hpong.html__ original half pong game (playable)
-__hpong.js__ manually minified by using unicode characters and a lexicon
-__compression.html__ contains js code which minifies the game using a modified lempel-ziv-method
-__upong.js__ minified game by using the modified lempel-ziv compressions
+## description of files
+
+* __hpong.html__ original half pong game (playable)
+* __hpong.js__ manually minified by using unicode characters and a lexicon
+* __compression.html__ contains js code which minifies the game using a modified lempel-ziv-method
+* __upong.js__ minified game by using the modified lempel-ziv compressions
 
 ## modified lempel ziv 
 
