@@ -1,0 +1,45 @@
+
+
+<html><body>
+<script>
+var source=`var style='<style>#ground{border: 9px solid black;width: 400px;height: 300px;}#ball{position:absolute;width:9px;height:9px;background-color:blue;}#paddle{position:absolute;height:9px;width:36px;background-color:black;}</style>';
+var ground='<div id="ground"><div id="ball"></div><div id="paddle"></div></div>';
+document.write(style+ground);var ball=document.getElementById('ball');var paddle=document.getElementById('paddle');var direction;var initball=()=>{x=Math.floor(Math.random()*300)+21;y=Math.floor(Math.random()*100)+21;ball.style.top=y;ball.style.left=x;direction={x:Math.floor(Math.random()*12),y:Math.floor(Math.random()*12)};};
+var initpaddle=()=>{paddle.style.top=264;paddle.style.left=190;}var reflect=()=>{direction.x=(parseInt(ball.style.left)>=400||parseInt(ball.style.left)<=0)?(direction.x*-1):direction.x;direction.y=(parseInt(ball.style.top)>=300||parseInt(ball.style.top)<=0)?(direction.y*-1):direction.y;ball.style.top=(parseInt(ball.style.top))+direction.y;ball.style.left=(parseInt(ball.style.left))+direction.x;};var falling=()=>{var y=parseInt(ball.style.top);var x=parseInt(ball.style.left);var yBorder=y>0&&y<300;var xBorder=x>0&&x<400;if(yBorder&&xBorder){ball.style.top=y+direction.y;ball.style.left=x+direction.x;}else{reflect();}};initball();initpaddle();
+setInterval(falling,162);`;
+var compressed=[];
+var i=0;
+while(i<source.length){
+ var done=false;
+ shard(source.substring(i,i+5));   
+ shard(source.substring(i,i+4));
+ shard(source.substring(i,i+3));   
+ if(!done){compressed.push(source[i]);++i;};   
+}    
+function shard(chunk){
+ if(compressed.join('').indexOf(chunk)>=0&&!done){
+  var ref=compressed.join('').indexOf(chunk)*4;
+  var offset=256+(chunk.length-3);   
+  compressed.push(String.fromCharCode(ref+offset));
+  i+=chunk.length;   
+  done=true;   
+ }
+} 
+        
+//console.log(compressed.join('')); 
+var coded=compressed.join('');
+var decompress=`
+var decoded=[];
+for(i=0;i<coded.length;++i){
+ var g=coded.charCodeAt(i);   
+ if(g>256){
+  var o=g%4;
+  g-=(256+o);g/=4;
+  decoded.push(coded.substring(g,g+3+o));   
+ }else{decoded.push(coded.charAt(i))}     
+}`;
+eval(decompress);    
+console.log(decoded.join(''));    
+</script>
+
+</body></html>

@@ -1,0 +1,69 @@
+<html><body>
+<script>
+var style='<style>#ground{position:absolute;border: 9px solid black;width: 400px;height: 300px;}#ball{position:absolute;width:9px;height:9px;background-color:blue;}#paddle{position:absolute;height:9px;width:36px;background-color:black;}#score{position:absolute;top:36px;right:81px;}</style>';
+var ground='<div id="ground"><div id="ball"></div><div id="paddle"></div><div id="score"></div></div>';
+document.write(style+ground);
+var ball=document.getElementById('ball');    
+var paddle=document.getElementById('paddle');    
+var score=document.getElementById('score');    
+var points=0;
+var direction;
+var onkey=9;
+var initBall=()=>{    
+	x=Math.floor(Math.random()*300)+21;
+	y=Math.floor(Math.random()*100)+21;
+    ball.style.top=y;
+    ball.style.left=x;	
+	direction={x: Math.floor(Math.random()*12), y: Math.floor(Math.random()*12)};
+};
+var initPaddle=()=>{
+	paddle.style.top=264;
+	paddle.style.left=190;
+}
+var reflectBorder=()=>{
+ direction.x=(parseInt(ball.style.left)>=400||parseInt(ball.style.left)<=0)?(direction.x*-1):direction.x;
+ direction.y=(parseInt(ball.style.top)>=300||parseInt(ball.style.top)<=0)?(direction.y*-1):direction.y;
+ points=(parseInt(ball.style.top)<285)?(++points):0; 
+ score.innerHTML=points;
+ ball.style.top=(parseInt(ball.style.top))+direction.y;
+ ball.style.left=(parseInt(ball.style.left))+direction.x;   
+};
+var reflectPaddle=()=>{ 
+ direction.y*=-1;
+ ball.style.top=(parseInt(ball.style.top))+direction.y;
+ ball.style.left=(parseInt(ball.style.left))+direction.x;  
+};
+var falling=()=>{
+    var y=parseInt(ball.style.top);
+	var x=parseInt(ball.style.left);
+    var yBorder=y>0&&y<300;
+	var xBorder=x>0&&x<400;	
+	var yy=parseInt(paddle.style.top);
+	var xx=parseInt(paddle.style.left);
+	if((y>=(yy-7)&&y<=(yy+18))&&(x>=(xx-7)&&x<=(xx+36))){
+	    reflectPaddle();
+	}
+	if(yBorder&&xBorder){
+		ball.style.top=y+direction.y;
+		ball.style.left=x+direction.x;	  
+	  
+	} else {
+	  reflectBorder(); 
+	} 
+}; 
+document.body.onkeyup=()=>{    
+	onkey*=-1;	
+};
+document.body.onkeydown=()=>{
+    var max=400-36;
+	var position=Math.abs((parseInt(paddle.style.left)+onkey)%max);
+	paddle.style.left=position;		
+};
+score.innerHTML=0;
+initBall();
+initPaddle();
+setInterval(falling,162);
+
+</script><style>#ground{position:absolute;border: 9px solid black;width: 400px;height: 300px;}#ball{position:absolute;width:9px;height:9px;background-color:blue;}#paddle{position:absolute;height:9px;width:36px;background-color:black;}#score{position:absolute;top:36px;right:81px;}</style><div id="ground"><div id="ball" style="top: 88px; left: 86px;"></div><div id="paddle" style="top: 264px; left: 190px;"></div><div id="score">1</div></div>
+
+</body></html>
