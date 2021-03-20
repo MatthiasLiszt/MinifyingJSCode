@@ -1,7 +1,7 @@
-th# MinifyingJSCode
+# MinifyingJSCode
 samples on how to minify js code by simple compression and adopted lempel-ziv-method 
 
-![https://codepen.io/mahagugu/pen/YzpRNWL](runnable demo of the minified half pong game)
+[runnable demo of the minified half pong game](https://codepen.io/mahagugu/pen/YzpRNWL)
 
 ## description of fileslie
 __hpong.html__ original half pong game (playable)
